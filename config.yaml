@@ -1,0 +1,17 @@
+lights:
+  - name: Top
+    pin_no: 29
+  - name: Bottom
+    pin_no: 31
+#  - name: Not Used
+#    pin_no: 33
+#  - name: Not Used
+#    pin_no: 36
+#  - name: Not Used
+#    pin_no: 35
+#  - name: Not Used
+#    pin_no: 38
+#  - name: Not Used
+#    pin_no: 40
+#  - name: Not Used
+#    pin_no: 37
