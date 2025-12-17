@@ -33,11 +33,6 @@ def switch_var(light_no):
     lights[light_no].switch()
     objects.save(lights)
 
-
-def save_settings():
-    with open("cron_settings.pkl", "wb") as f:
-        pickle.dump(lights, f)
-
 def is_cron_valid(cron_day: objects.CronDay):
     global invalid_day
     if cron_day.start_hour > cron_day.end_hour:
@@ -56,7 +51,8 @@ def create_cron_day_if_missing(day_number: int, light: objects.Light):
             default_cron_settings["start_minute"],
             default_cron_settings["end_hour"],
             default_cron_settings["end_minute"],
-            False
+            False,
+            True,
         )
         light.cron_days.append(new_cron_day)
 
@@ -81,6 +77,10 @@ for day in days:
             cron_day = light.cron_days[day_number]
             cron_day.enabled = st.checkbox("Enabled", key=f"{day_name}-{light.name}-enabled", value=cron_day.enabled)
             if cron_day.enabled:
+                with st.container(horizontal=True, key=f"state_to_be_set-{day_name}-{light.name}"):
+                    cron_day.state_to_be_set = st.toggle("", key=f"{day_name}-{light.name}-state_to_be_set",
+                                                           value=cron_day.state_to_be_set)
+                    st.text(f"Set state to {'Turn on' if cron_day.state_to_be_set else 'Turn off'}")
                 with st.container(horizontal=True, key=f"start_time-{day_name}-{light.name}"):
                     cron_day.start_hour = st.number_input("Start hour", key=f"{day_name}-{light.name}-start_hour", min_value=0,
                                                  max_value=23, value=cron_day.start_hour)
