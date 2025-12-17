@@ -23,16 +23,15 @@ def _update_gpio():
         state = l.state
         name = l.name
         _create_gpio(pin_no)
-        print(f"Setting pin {pin_no} to {state}")
         if pin_no in gpio_state and gpio_state[pin_no]:
-            if state:
+            if state and not gpio_state[pin_no]:
+                print(f"Setting pin {pin_no} to {state}")
                 gpio_state[pin_no].on()
-            elif not state:
+            elif not state and gpio_state[pin_no]:
+                print(f"Setting pin {pin_no} to {state}")
                 gpio_state[pin_no].off()
         else:
             print(f"No GPIO is set! Not changing state of light {name}")
-
-_update_gpio()
 
 while True:
     # have to be done this way as crontab has granularity of 1 minute
