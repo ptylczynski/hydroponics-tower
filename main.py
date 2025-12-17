@@ -5,11 +5,6 @@ from typing import Optional
 import streamlit as st
 import pickle
 import mock_pyarrow
-import os
-import schedule
-from cron import update_lights
-
-from altair import DateTime
 
 import objects
 
@@ -33,8 +28,6 @@ days = [
 ]
 
 invalid_day: Optional[objects.CronDay] = None
-
-schedule.every(1).minutes.do(update_lights)
 
 def switch_var(light_no):
     lights[light_no].switch()
