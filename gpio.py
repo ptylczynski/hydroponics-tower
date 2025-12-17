@@ -1,3 +1,5 @@
+import time
+
 import schedule
 from gpiozero import LED
 
@@ -32,4 +34,6 @@ def _update_gpio():
 
 _update_gpio()
 
-schedule.every(10).seconds.do(_update_gpio)
+while True:
+    _update_gpio()
+    time.sleep(10)
