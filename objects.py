@@ -1,11 +1,8 @@
 import os
 import pickle
 from typing import List, Optional
-from gpiozero import LED
 
 import yaml
-
-gpio = dict()
 
 def create_or_load_lights():
     if os.path.exists("lights.pkl"):
@@ -37,44 +34,20 @@ class Light:
         self.cron_days = cron_days
         self.name = name
         self.pin_no = pin_no
-        self._update_gpio()
 
     def switch(self):
         self.state = not self.state
         self.icon = ":material/lightbulb:" if self.state else ":material/light_off:"
-        self._update_gpio()
 
     def turn_on(self):
         if not self.state:
             self.state = True
             self.icon = ":material/lightbulb:"
-            self._update_gpio()
 
     def turn_off(self):
         if self.state:
             self.state = False
             self.icon = ":material/light_off:"
-            self._update_gpio()
-
-    def _create_gpio(self):
-        try:
-            if self.pin_no not in gpio:
-                gpio[self.pin_no] = LED(self.pin_no, active_high=False)
-        except Exception as e:
-            print(e)
-            print("GPIO is disabled now!")
-            return None
-
-    def _update_gpio(self):
-        self._create_gpio()
-        print(f"Setting pin {self.pin_no} to {self.state}")
-        if gpio[self.pin_no]:
-            if self.state:
-                gpio[self.pin_no].on()
-            elif not self.state:
-                gpio[self.pin_no].off()
-        else:
-            print(f"No GPIO is set! Not changing state of light {self.name}")
 
 
 def save(lights: List[Light]):
