@@ -36,4 +36,4 @@ def _update_gpio():
 while True:
     # have to be done this way as crontab has granularity of 1 minute
     _update_gpio()
-    time.sleep(10)
+    time.sleep(1)
