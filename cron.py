@@ -50,7 +50,7 @@ finally:
 if token and ip and port:
     response = requests.put(
         f"https://ddns.ptl.cloud/register/{token}/",
-            json={"ip": f"{ip}:{port}", "secret": secret_token}
+            json={"ip": f"{ip}:{port}", "secret_token": secret_token}
     ).json()
     print(f"DDNS response: {response}")
 else:
