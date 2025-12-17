@@ -1,3 +1,4 @@
+import schedule
 from gpiozero import LED
 
 import objects
@@ -14,6 +15,7 @@ def _create_gpio(pin_no: int):
         return None
 
 def _update_gpio():
+    print("Updating GPIO...")
     for l in objects.create_or_load_lights():
         pin_no = l.pin_no
         state = l.state
@@ -29,3 +31,5 @@ def _update_gpio():
             print(f"No GPIO is set! Not changing state of light {name}")
 
 _update_gpio()
+
+schedule.every(10).seconds.do(_update_gpio)
