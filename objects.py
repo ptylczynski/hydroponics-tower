@@ -18,13 +18,14 @@ def create_or_load_lights():
     return lights
 
 class CronDay:
-    def __init__(self, day_no: int, start_hour: int, start_minute: int, end_hour: int, end_minute: int, enabled: bool):
+    def __init__(self, day_no: int, start_hour: int, start_minute: int, end_hour: int, end_minute: int, enabled: bool, state_to_be_set: bool):
         self.day_no = day_no
         self.start_hour = start_hour
         self.start_minute = start_minute
         self.end_hour = end_hour
         self.end_minute = end_minute
         self.enabled = enabled
+        self.state_to_be_set = state_to_be_set
 
 
 class Light:
