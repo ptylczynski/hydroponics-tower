@@ -24,10 +24,10 @@ def _update_gpio():
         name = l.name
         _create_gpio(pin_no)
         if pin_no in gpio_state and gpio_state[pin_no]:
-            if state and not gpio_state[pin_no]:
+            if state and not gpio_state[pin_no].is_lit:
                 print(f"Setting pin {pin_no} to {state}")
                 gpio_state[pin_no].on()
-            elif not state and gpio_state[pin_no]:
+            elif not state and gpio_state[pin_no].is_lit:
                 print(f"Setting pin {pin_no} to {state}")
                 gpio_state[pin_no].off()
         else:
