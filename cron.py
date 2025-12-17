@@ -34,6 +34,7 @@ objects.save(lights)
 print("Updating ip in DDNS...")
 
 token = os.environ.get("DDNS_TOKEN")
+secret_token = os.environ.get("DDNS_SECRET")
 port = os.environ.get("DDNS_PORT", 8501)
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.settimeout(0)
@@ -47,7 +48,10 @@ finally:
     s.close()
 
 if token and ip and port:
-    response = requests.get(f"https://ddns.ptl.cloud/register/{token}/{ip}:{port}").json()
+    response = requests.put(
+        f"https://ddns.ptl.cloud/register/{token}/",
+            json={"ip": f"{ip}:{port}", "secret": secret_token}
+    ).json()
     print(f"DDNS response: {response}")
 else:
     print("DDNS_TOKEN or IP or PORT not found")
