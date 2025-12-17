@@ -5,6 +5,7 @@ from gpiozero import LED
 
 import yaml
 
+gpio = dict()
 
 def create_or_load_lights():
     if os.path.exists("lights.pkl"):
@@ -36,7 +37,6 @@ class Light:
         self.cron_days = cron_days
         self.name = name
         self.pin_no = pin_no
-        self.gpio = self._create_gpio()
         self._update_gpio()
 
     def switch(self):
@@ -58,18 +58,21 @@ class Light:
 
     def _create_gpio(self):
         try:
-            return LED(self.pin_no)
+            if self.pin_no not in gpio:
+                gpio[self.pin_no] = LED(self.pin_no, active_high=False)
         except Exception as e:
             print(e)
             print("GPIO is disabled now!")
             return None
 
     def _update_gpio(self):
-        if self.gpio:
+        self._create_gpio()
+        print(f"Setting pin {self.pin_no} to {self.state}")
+        if gpio[self.pin_no]:
             if self.state:
-                self.gpio.on()
-            else:
-                self.gpio.off()
+                gpio[self.pin_no].on()
+            elif not self.state:
+                gpio[self.pin_no].off()
         else:
             print(f"No GPIO is set! Not changing state of light {self.name}")
 
