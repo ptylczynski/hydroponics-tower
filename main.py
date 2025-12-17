@@ -4,6 +4,7 @@ from typing import Optional
 
 import streamlit as st
 import pickle
+import mock_pyarrow
 import os
 
 from altair import DateTime
