@@ -17,7 +17,6 @@ def _create_gpio(pin_no: int):
         return None
 
 def _update_gpio():
-    print("Updating GPIO...")
     for l in objects.create_or_load_lights():
         pin_no = l.pin_no
         state = l.state
